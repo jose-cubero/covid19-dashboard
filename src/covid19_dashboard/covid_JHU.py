@@ -6,7 +6,7 @@ __version__ = '1.0.0'
 import pandas as pd
 from pathlib import Path
 
-_debug_lib = True
+# _debug_lib = True
 _lib_path = str(Path(__file__).parent)
 
 def get_clean_covid_data(data_set, country_list=None):
@@ -16,8 +16,10 @@ def get_clean_covid_data(data_set, country_list=None):
         print("error, data_set" + data_set + "does not exist")
         exit(5)
 
-    file_name = _lib_path+'/data/time_series_covid19_' + data_set + '_global.csv'
-    df = pd.read_csv(file_name, parse_dates=True)
+    # file_name = _lib_path+'/data/time_series_covid19_' + data_set + '_global.csv'
+    JHU_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
+    JHU_url += 'time_series_covid19_' + data_set + '_global.csv'
+    df = pd.read_csv(JHU_url, parse_dates=True)
     df = df.drop(columns= ['Lat','Long'])
 
     # Clean data s1: For simplicity, data from "overseas territories" will not be used. 
@@ -56,16 +58,17 @@ def get_clean_covid_data(data_set, country_list=None):
 
     df = df.rename(index=fix_these)
 
-    if (_debug_lib):
-        debugcsv = _lib_path+'/debug/clean_covid_'+ data_set +'.csv'
-        # printing country names only.
-        df.sort_index().to_csv(debugcsv, columns=[], header=False)
+    # if (_debug_lib):
+    #     debugcsv = _lib_path+'/debug/clean_covid_'+ data_set +'.csv'
+    #     # printing country names only.
+    #     df.sort_index().to_csv(debugcsv, columns=[], header=False)
 
     # reset to numerical index
     # returns df in wide format
     # HEADER
     # index, country, date-0, date-1, ..... date-N
 
-    df.reset_index(in_place=true)
-    print(df)
+    # df.reset_index(inplace=True)
+#     df = df.rename_axis("Country", axis=0)
+    df = df.rename_axis("Date", axis=1)
     return df

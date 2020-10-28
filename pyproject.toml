@@ -5,9 +5,9 @@ description = ""
 authors = ["Jose Cubero <cuberojose@gmal.com>"]
 license = "MIT"
 readme = "README.md"
-# homepage = "git@github.com:jose-cubero/wiki-scraper.git"
-# repository = "git@github.com:jose-cubero/wiki-scraper.git" 
-# keywords = ["scrapping", "wikipedia", "hypermodern"]
+homepage = "https://github.com/jose-cubero/covid19-dashboard"
+repository = "https://github.com/jose-cubero/covid19-dashboard" 
+keywords = ["covid19", "dash", "data-visualization"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -17,6 +17,9 @@ pandas = "^1.1.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+
+[tool.poetry.scripts]
+launch_server = "covid_dashboard.dash:launch_server"
 
 [build-system]
 requires = ["poetry>=0.12"]
