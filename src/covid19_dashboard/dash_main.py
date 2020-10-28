@@ -11,7 +11,7 @@ import pandas as pd
 pd.options.plotting.backend = "plotly"
 
 # local imports
-from covid_JHU import get_clean_covid_data
+from data_parser.covid_JHU import get_clean_covid_data
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -47,4 +47,4 @@ def launch_server():
     app.run_server(debug=True)
 
 if __name__ == '__main__':
-    launch_server
+    launch_server()
