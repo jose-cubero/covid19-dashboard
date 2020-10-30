@@ -8,8 +8,8 @@ import pandas as pd
 # pd.options.plotting.backend = "plotly"
 
 # local imports
-from .data_parser.covid_JHU import get_clean_covid_data
-# from data_parser.covid_JHU import get_clean_covid_data
+import covid19_dashboard.data_parser.covid_JHU as jhu
+# from covid19_dashboard.data_parser.covid_JHU import get_clean_covid_data
 
 def foo():
     print("in foo context.")
@@ -18,11 +18,10 @@ def launch_server():
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
     app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-    df = get_clean_covid_data('confirmed').T.reset_index()
-    print(df)
-
-    fig = px.scatter(df, x="Date", y="Germany")
-    # fig2 = fig
+    df = jhu.parse_timeseries_csv('confirmed')
+    # df = df[df['Country'] == 'Germany' ]
+    # fig = px.scatter(df, x="Date", y="Germany")
+    fig = px.line(df, x="Date", y='Value', color='Country')
 
     app.layout = html.Div(children=[
         html.H1(children='Hello Dash'),

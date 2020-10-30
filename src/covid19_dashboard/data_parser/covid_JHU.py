@@ -7,9 +7,9 @@ import pandas as pd
 from pathlib import Path
 
 # _debug_lib = True
-_lib_path = str(Path(__file__).parent)
+# _lib_path = str(Path(__file__).parent)
 
-def get_clean_covid_data(data_set, country_list=None):
+def parse_timeseries_csv(data_set, country_list=None):
 
     valid_names = {'confirmed', 'deaths', 'recovered'}
     if (data_set not in valid_names):
@@ -44,10 +44,9 @@ def get_clean_covid_data(data_set, country_list=None):
     # Clean data s3: merge multi-region countries
     df = df.drop(columns= ['Province/State'])
     df = df.rename(columns={'Country/Region': 'Country'})
-    # df = df.groupby('Country', as_index=False).sum()
     df = df.groupby('Country').sum() # IMPLICIT INDEX CHANGE TO Country
 
-    # Clean data s3: Modify some particular names...
+    # Clean data s4: Modify some particular names...
     # to be fixed:    
     fix_these = {
         'US' : 'USA',
@@ -55,20 +54,56 @@ def get_clean_covid_data(data_set, country_list=None):
         'Taiwan*' : 'Taiwan',
         'West Bank and Gaza' : 'Palestine'
     }
-
     df = df.rename(index=fix_these)
 
+    ##### Data is now clean
+    # df is now in WIDE format, with Country as index
+    # HEADER
+    # country, date-0, date-1, ..... date-N
+
+    ##### Convert to long/tidy format, numerical index
+    # 1. Transpose
+    df = df.T
+    # Now the index are the dates
+
+    # 2. Reset index to default (numerical) and fix axis' names
+    df = df.rename_axis('Date', axis='index')
+    df.reset_index(inplace=True)
+    # df = df.rename_axis('idx', axis='index')  # unnecessary, due to following melt
+
+    df['Date'] =  pd.to_datetime(df['Date'])
+
+    # 3. Melt
+    df = df.melt(id_vars=['Date'],
+            var_name='Country',
+            value_name='Value')
+
+    # df is now in LONG format, with numerical index
+    # HEADER
+    # idx, date, country, value
+
+    ##### Debug
     # if (_debug_lib):
     #     debugcsv = _lib_path+'/debug/clean_covid_'+ data_set +'.csv'
     #     # printing country names only.
     #     df.sort_index().to_csv(debugcsv, columns=[], header=False)
 
-    # reset to numerical index
-    # returns df in wide format
-    # HEADER
-    # index, country, date-0, date-1, ..... date-N
-
-    # df.reset_index(inplace=True)
-#     df = df.rename_axis("Country", axis=0)
-    df = df.rename_axis("Date", axis=1)
     return df
+
+def get_clean_covid_data():
+    orig_var_list = ['confirmed', 'deaths', 'recovered']
+    df_list = []
+
+    for var in orig_var_list:
+        dfx = parse_timeseries_csv(var)
+        dfx['Var'] = var.capitalize()
+        df_list.append(dfx)
+
+    return pd.concat(df_list, axis=0, ignore_index=True)
+
+if __name__ == '__main__':
+
+    df_full = get_clean_covid_data()
+    print(df_full)
+
+    exit()
