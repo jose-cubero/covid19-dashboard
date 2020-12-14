@@ -1,0 +1,5 @@
+# Debug outputs will be stored here.
+# contents need no version history
+*
+# Except this file
+!.gitignore
