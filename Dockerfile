@@ -1,4 +1,3 @@
-# FROM python:3.7.6-alpine3.11 as base
 FROM python:3.8 as base
 
 ENV PYTHONFAULTHANDLER=1 \
@@ -15,7 +14,10 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
     POETRY_VERSION=1.1.4
 
 # RUN apk add --no-cache gcc libffi-dev musl-dev postgresql-dev
-RUN pip install "poetry==$POETRY_VERSION"
+# RUN pip install "poetry==$POETRY_VERSION"
+# alternative
+RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python -
+
 RUN python -m venv /venv
 
 COPY pyproject.toml poetry.lock ./
@@ -31,7 +33,7 @@ FROM base as final
 COPY --from=builder /venv /venv
 COPY server.py ./
 
-# Define environment variables
+# Define environment variables for the dash server app
 ENV dash_port=8050
 ENV dash_debug="True"
 CMD ["/venv/bin/python", "server.py"]
