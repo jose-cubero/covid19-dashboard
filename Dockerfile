@@ -17,6 +17,7 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
 # RUN pip install "poetry==$POETRY_VERSION"
 # alternative
 RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python -
+ENV PATH="${PATH}:/root/.poetry/bin"
 
 RUN python -m venv /venv
 
