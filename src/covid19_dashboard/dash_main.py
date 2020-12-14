@@ -64,6 +64,10 @@ def launch_server():
     app=get_dash_app()
     app.run_server(debug=True)
 
+def foo():
+    print("in foo context.")
+    #TODO: remove after debug
+
 if __name__ == '__main__':
     print ("in main context.")
     launch_server()

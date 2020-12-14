@@ -25,5 +25,5 @@ launch_server = "covid19_dashboard.dash_main:launch_server"  # TODO: fix/remove
 cov_foo = "covid19_dashboard.dash_main:foo"
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["poetry>=1.1"]
 build-backend = "poetry.masonry.api"
