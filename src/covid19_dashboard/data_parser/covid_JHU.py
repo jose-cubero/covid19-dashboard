@@ -137,8 +137,8 @@ def get_covid_data_all():
     # df_merged = pd.merge(df_world_pop.loc[: , ["UN_Region"]], country_df, left_index=True, right_index=True, how='inner')
 
 
-    print(df_covid_pri)
-    print(df_world_pop)
+    # print(df_covid_pri)
+    # print(df_world_pop)
     df_countries = pd.merge(df_covid_pri, df_world_pop,  on='Country', how='inner')
 
     # 2. Generate Sum Rows for Continent & Region, 
@@ -180,10 +180,13 @@ def get_covid_data_all():
     # 4. Concat 
     df = pd.concat([df_countries, df_regions, df_continents], ignore_index=True, copy=False)
 
-    debugcsv = _lib_path+'/debug/ALL.csv'
-    df.to_csv(debugcsv)
+    # debugcsv = _lib_path+'/debug/ALL.csv'
+    # df.to_csv(debugcsv)
 
     print(df)
+
+    # FINAL DATA FRAME FORMAT:
+
     return df
 
 
