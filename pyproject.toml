@@ -21,8 +21,7 @@ flake8 = "^3.8.4"
 black = "^20.8b1"
 
 [tool.poetry.scripts]
-launch_server = "covid19_dashboard.dash_main:launch_server"  # TODO: fix/remove
-cov_foo = "covid19_dashboard.dash_main:foo"
+launch_debug_server = "covid19_dashboard.dash_main:launch_debug_server"
 
 [build-system]
 requires = ["poetry>=1.1"]

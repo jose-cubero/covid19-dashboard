@@ -9,9 +9,6 @@ import pandas as pd
 # local imports
 import covid19_dashboard.data_parser.covid_JHU as jhu
 
-def foo():
-    print("in foo context.")
-
 def get_dash_app():
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
     app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -60,19 +57,13 @@ def get_dash_app():
     # print("Closing server app")
     return app
 
-def launch_server():
+def launch_debug_server():
+    print ("Launching debug server")
     app=get_dash_app()
     app.run_server(debug=True)
 
-def foo():
-    print("in foo context.")
-    #TODO: remove after debug
-
 if __name__ == '__main__':
-    print ("in main context.")
-    launch_server()
-
-
+    launch_debug_server()
 
 
 ##### Saved forlater

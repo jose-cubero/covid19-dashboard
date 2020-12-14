@@ -29,7 +29,9 @@ FROM base as final
 
 # RUN apk add --no-cache libffi libpq
 COPY --from=builder /venv /venv
-COPY docker-entrypoint.sh wsgi.py ./
-# CMD ["/venv/bin/launch_server"]
-# CMD ["python", "server.py"]
-CMD ["python", "src/covid19_dashboard/dash_main.py"]
+COPY server.py ./
+
+# Define environment variables
+ENV dash_port=8050
+ENV dash_debug="True"
+CMD ["/venv/bin/python", "server.py"]
