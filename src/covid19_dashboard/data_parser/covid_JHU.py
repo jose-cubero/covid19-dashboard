@@ -7,7 +7,7 @@ import pandas as pd
 from pathlib import Path
 
 # local modules
-from covid19_dashboard.data_parser.world_pop import get_world_pop
+from .world_pop import get_world_pop
 
 _debug_lib = True
 _lib_path = str(Path(__file__).parent)

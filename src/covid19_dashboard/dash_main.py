@@ -7,7 +7,7 @@ import plotly.express as px
 import pandas as pd
 
 # local imports
-import covid19_dashboard.data_parser.covid_JHU as jhu
+import .data_parser.covid_JHU as jhu
 
 def get_dash_app():
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
