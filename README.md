@@ -9,25 +9,20 @@ The data is taken from John Hopkins University (JHU) git repository: https://git
 
 Linux machine with [Docker](https://www.docker.com)
 
-## Installation and Usage
+## Usage
 
-Build the docker image
+Pull and run the latest image from Docker Hub:
+```
+docker run -d -p 8050:8050 joeblue/covid19-dashboard
+```
+
+**Or** build it locally
+
 ```
 docker build -t covid-dash https://github.com/jose-cubero/covid19-dashboard.git
-```
-
-Run it
-```
 docker run -d -p 8050:8050 covid-dash:latest
 ```
 
 Now you can load the dashboard in your favorite web-browser by visiting:
 http://0.0.0.0:8050/
 
-## Removal
-
-Stop and remove the container:
-```
-docker rm 
-Remove the image
-```
